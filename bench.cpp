@@ -1,5 +1,6 @@
 #include "include/lockfree_ring.hpp"
 
+#include <atomic>
 #include <chrono>
 #include <cstdint>
 #include <iostream>
@@ -30,7 +31,7 @@ int main() {
   prod.join();
   cons.join();
   auto t1 = std::chrono::steady_clock::now();
-  const double sec = std::chrono::duration<double>(t1 - t0).count();
+  double sec = std::chrono::duration<double>(t1 - t0).count();
   const std::uint64_t expect = N * (N - 1) / 2;
   std::cout << "SPSC ops=" << N << " sum_ok=" << (sum == expect)
             << " Mops=" << (2.0 * N / sec) / 1e6 << "\n";
